@@ -54,13 +54,13 @@
     <div class="container">
         <div class="header-area__wrapper">
             <div class="header-area__logo">
-                <img src="{{section.settings.site_logo |  image_url }}" alt="Site Logo" loading="eager">
+                <img src="{% if section.settings.site_logo != blank%}{{section.settings.site_logo |  image_url }} {% else %} https://cdn.shopify.com/s/files/1/0639/5068/4211/files/site-logo.png?v=1740119628 {% endif %} " alt="Site Logo" loading="eager">
             </div>
             <div class="header-area__text">
                 <span>{{ section.settings.header_text }}</span>
             </div>
             <div class="header-area__cta">
-                <a href="{{ section.settings.banner_cta_url }}" class="cta cta-secondary">{{ section.settings.banner_cta_text }} {% render 'arrow-right' %} </a>
+                <a href="{% if section.settings.header_cta_url != blank%}{{ section.settings.header_cta_url }}{% else %}#{% endif %}" class="cta cta-secondary">{% if section.settings.header_cta_text != blank%}{{ section.settings.header_cta_text }}{% else %}Choose Gift{% endif %} {% render 'arrow-right' %} </a>
             </div>
         </div>
     </div>
@@ -71,13 +71,13 @@
             <div class="banner-area__content__text">
                 <h1 class="banner-area__heading">{{ section.settings.banner_heading }}</h1>
                 <p class="banner-area__description">{{ section.settings.banner_description }}</p>
-                <a href="{{ section.settings.banner_cta_url }}" class="cta cta-primary">{{ section.settings.banner_cta_text }}{% render 'arrow-right' %} </a>
+                <a href="{% if section.settings.banner_cta_url != blank%}{{ section.settings.banner_cta_url }}{% else %}#{% endif %}" class="cta cta-primary">{{ section.settings.banner_cta_text }}{% render 'arrow-right' %} </a>
             </div>
         </div>
         
     </div>
     <div class="banner-area__image">
-            <img src="{{section.settings.banner_image | image_url}}" alt="banner background image" loading="eager">
+            <img src="{% if section.settings.banner_image != blank%}{{section.settings.banner_image | image_url}}{% else %}https://cdn.shopify.com/s/files/1/0639/5068/4211/files/banner-bg.png?v=1740122890{% endif %}" alt="banner background image" loading="eager">
         </div>
 </div>
 <div class="banner-footer-area">
@@ -87,6 +87,7 @@
 </div>
 
 {% schema %}
+
 {
     "name": "Banner with Header",
     "settings": [
@@ -107,14 +108,14 @@
         },
         {
             "type": "text",
-            "id": "cta_text",
-            "label": "CTA Text",
+            "id": "header_cta_text",
+            "label": "Header CTA Text",
             "default": "Choose Gift"
         },
         {
             "type": "url",
-            "id": "cta_url",
-            "label": "CTA URL/Link"
+            "id": "header_cta_url",
+            "label": "Header CTA URL/Link"
         },
         {
             "type": "header",
