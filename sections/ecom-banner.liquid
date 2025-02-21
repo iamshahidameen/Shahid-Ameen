@@ -1,0 +1,169 @@
+{{ 'ecom-styles.css' | asset_url | stylesheet_tag }}
+<style>
+    .header-area {
+        background-color: var(--custom-quinary-color);
+    }
+    .header-area__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 6.4rem;
+    }
+    .header-area__text span {
+        font-size: 1.6rem;
+        color: var(--custom-primary-color);
+    }
+    .banner-area {
+        position: relative;
+    }
+    .banner-area__container {
+        position: absolute;
+        bottom: 0;
+    }
+    .banner-area__content {
+        max-width: 483px;
+        margin-bottom: clamp(6rem, 3.225rem + 2.71vw, 10rem);
+    }
+    .banner-area__heading {
+        font-size: 7rem;
+        margin-bottom: clamp(6rem, 3.225rem + 2.71vw, 10rem);
+    }
+    .banner-area__description {
+        font-size: 2rem;
+        line-height: 2.8rem;
+        letter-spacing: 0px;
+        margin-bottom: clamp(6rem, 3.919rem + 2.033vw, 9rem);
+    }
+    .banner-area__image img {
+        object-fit: cover;
+        width: 100%;
+    }
+    .banner-footer-area {
+        background: var(--custom-quinary-color);
+        padding: 1rem 0;
+    }
+    .banner-footer-area  .banner-footer-text {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 13.42px;
+        letter-spacing: 0px;
+        text-align: center;
+    }
+</style>
+<div class="header-area">
+    <div class="container">
+        <div class="header-area__wrapper">
+            <div class="header-area__logo">
+                <img src="{{section.settings.site_logo |  image_url }}" alt="Site Logo" loading="eager">
+            </div>
+            <div class="header-area__text">
+                <span>{{ section.settings.header_text }}</span>
+            </div>
+            <div class="header-area__cta">
+                <a href="{{ section.settings.banner_cta_url }}" class="cta cta-secondary">{{ section.settings.banner_cta_text }} {% render 'arrow-right' %} </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="banner-area">
+    <div class="container banner-area__container">
+        <div class="banner-area__content mb-5">
+            <div class="banner-area__content__text">
+                <h1 class="banner-area__heading">{{ section.settings.banner_heading }}</h1>
+                <p class="banner-area__description">{{ section.settings.banner_description }}</p>
+                <a href="{{ section.settings.banner_cta_url }}" class="cta cta-primary">{{ section.settings.banner_cta_text }}{% render 'arrow-right' %} </a>
+            </div>
+        </div>
+        
+    </div>
+    <div class="banner-area__image">
+            <img src="{{section.settings.banner_image | image_url}}" alt="banner background image" loading="eager">
+        </div>
+</div>
+<div class="banner-footer-area">
+    <div class="container">
+        <p class="banner-footer-text text-center">{{section.settings.banner_footer_text}}</p>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Banner with Header",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Header Settings"
+        },
+        {
+            "type": "image_picker",
+            "id": "site_logo",
+            "label": "Site Logo"
+        },
+        {
+            "type": "text",
+            "id": "header_text",
+            "label": "Header Text",
+            "default": "Find the ideal gift for your loved ones."
+        },
+        {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text",
+            "default": "Choose Gift"
+        },
+        {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA URL/Link"
+        },
+        {
+            "type": "header",
+            "content": "Banner Settings"
+        },
+        {
+            "type": "image_picker",
+            "id": "banner_image",
+            "label": "Banner Image"
+        },
+        {
+            "type": "text",
+            "id": "banner_heading",
+            "label": "Banner Heading",
+            "default": "The Gift Guide"
+        },
+        {
+            "type": "text",
+            "id": "banner_description",
+            "label": "Banner Description",
+            "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+        },
+        {
+            "type": "text",
+            "id": "banner_cta_text",
+            "label": "Banner CTA Text"
+        },
+        {
+            "type": "url",
+            "id": "banner_cta_url",
+            "label": "Banner CTA URL/Link"
+        },
+        {
+            "type": "header",
+            "content": "Banner Footer Settings"
+        },
+        {
+            "type": "text",
+            "id": "banner_footer_text",
+            "label": "Banner Footer Text",
+            "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+        }
+
+    ],
+    "presets": [
+        {
+            "category": "Banner with Header",
+            "name": "Banner with Header"
+        }
+    ]
+}
+{% endschema %}

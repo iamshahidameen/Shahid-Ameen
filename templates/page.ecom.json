@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "ecom-banner",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
