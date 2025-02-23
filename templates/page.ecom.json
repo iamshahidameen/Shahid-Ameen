@@ -1,11 +1,18 @@
 {
   "sections": {
-    "main": {
+    "banner": {
       "type": "ecom-banner",
+      "settings": {
+      }
+    },
+    "grid": {
+      "type": "ecom-grid",
       "settings": {
       }
     }
   },
   "order": [
-    "main"  ]
+    "banner",
+    "grid"  
+  ]
 }

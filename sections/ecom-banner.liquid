@@ -71,7 +71,7 @@
             <div class="banner-area__content__text">
                 <h1 class="banner-area__heading">{{ section.settings.banner_heading }}</h1>
                 <p class="banner-area__description">{{ section.settings.banner_description }}</p>
-                <a href="{% if section.settings.banner_cta_url != blank%}{{ section.settings.banner_cta_url }}{% else %}#{% endif %}" class="cta cta-primary">{{ section.settings.banner_cta_text }}{% render 'arrow-right' %} </a>
+                <a href="{% if section.settings.banner_cta_url != blank%}{{ section.settings.banner_cta_url }}{% else %}#{% endif %}" class="cta cta-primary">{{ section.settings.banner_cta_text }}{% render 'arrow-right' %}</a>
             </div>
         </div>
         
@@ -141,7 +141,8 @@
         {
             "type": "text",
             "id": "banner_cta_text",
-            "label": "Banner CTA Text"
+            "label": "Banner CTA Text",
+            "default": "Shop Now"
         },
         {
             "type": "url",
