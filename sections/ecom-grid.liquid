@@ -1,0 +1,131 @@
+
+<div class="grid-main-wrapper shopify-section" id="{{section.id}}" >
+    <div class="container">
+        <h2 class="secondary-heading mb-3">{{ section.settings.grid_title }}</h2>
+        <div class="grid-products">
+            {% for block in section.blocks %} 
+                {{block.settings.product.title}} 
+                {% assign prod = all_products[block.settings.prod_id] %}
+                <div class="grid-product" data-product-title="{{prod.title}}" data-product-handle="{{prod.handle}}" data-product-id="{{prod.id}}">
+                    <div class="grid-product__icon">
+                        {% render 'icon-view' %}
+                    </div>
+                    <div class="product-image__wrapper">
+                        <img src="{{prod.featured_image |  image_url}}" alt="{{prod.title}} image">
+                    </div>
+                </div>
+                <div class="grid-product-popup" style="display: none;">
+                    <div class="grid-product-popup__inner-wrapper">
+                        <div class="grid-product-popup__close">
+                            {%  render 'icon-cross' %}
+                        </div>
+                        <div class="grid-product-popup__content">
+                            <div class="grid-product-popup__header">
+                                <div class="grid-product-popup__image">
+                                    <img src="{{prod.featured_image |  image_url}}" alt="{{prod.title}} image">
+                                </div>
+                                <div class="grid-product-popup__details">
+                                    <h3 class="grid-product-popup__details--title">{{prod.title}}</h3>
+                                    <p class="grid-product-popup__details--price">{{prod.price | money}}</p>
+                                    <p class="grid-product-popup__details--description">{{prod.description}}</p>
+                                </div>
+                            </div>
+                            <div class="grid-product-popup__option--wrapper">
+                                {% if prod.options.size > 0 %}
+                                    {% for product_option in prod.options_with_values %}
+                                    {% if product_option.name == 'Color'  %}
+                                        <div class="grid-product-popup__option--inner-wrapper">
+                                            <div class="grid-product-popup__option--name">
+                                                {{ product_option.name  }}
+                                            </div>
+                                           <div class="grid-product-popup__options">
+                                            {% for product_option_val in product_option.values  %}
+                                                <button class="cta-variant" data-variant-color="{{ product_option_val  }}" onclick="selectColor(this)"><span class="cta-variant-color-hint" style="background-color: {{product_option_val}};"></span>{{ product_option_val  }}</button>
+                                            {% endfor %}
+                                           </div>
+                                        </div>
+                                   
+
+                                        {% else %}
+                                        <div class="grid-product-popup__option--inner-wrapper">
+                                            <div class="grid-product-popup__option--name">
+                                                {{ product_option.name  }}
+                                            </div>
+                                           <div class="grid-product-popup__options">
+                                            <select name="" id="{{product_option.name}}" class="select-option-dropdown minimal" onchange="pickSize(this)">
+                                                <option value="null">Choose Your Size</option>
+                                                {% for product_option_val in product_option.values  %}
+                                                    <option value="{{product_option_val}}" data-variant-size="{{ product_option_val  }}">{{product_option_val}}</option>
+                                                {% endfor %}
+                                                </select></select>
+                                 
+                                           </div>
+                                        </div>
+                                    {%endif%}
+                                    
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            
+                        </div>
+                        <div class="grid-product-cta">
+                                <a href="javascript:void(0)" class="cta cta-primary" onclick="addToCart(this)">Add To Cart {% render 'arrow-right' %}</a>
+                            </div>
+                    </div>
+                    <script type="application/json">
+                                {{prod.variants | json}}
+                    </script>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div id="cart-model" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Following Products have been added to cart</h2>
+    </div>
+    <div class="modal-body">
+      
+    </div>
+   
+  </div>
+
+</div>
+{{ 'ecom-script.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+    "name": "Ecom Grid",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Grid Title"
+        },
+        {
+            "type": "text",
+            "id": "grid_title",
+            "label": "Grid Title/Name",
+            "default": "Tisso vison in the wild"
+        }
+    ],
+    "blocks": [ 
+            {
+            "name": "Select Products",
+             "type": "product-select",
+             "settings": [
+                {
+                    "type": "product",
+                    "id": "prod_id",
+                    "label": "Select Product"
+                }
+             ]   
+            }
+        ]
+}
+   
+{% endschema %}
