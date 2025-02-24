@@ -1,56 +1,5 @@
 {{ 'ecom-styles.css' | asset_url | stylesheet_tag }}
-<style>
-    .header-area {
-        background-color: var(--custom-quinary-color);
-    }
-    .header-area__wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        min-height: 6.4rem;
-    }
-    .header-area__text span {
-        font-size: 1.6rem;
-        color: var(--custom-primary-color);
-    }
-    .banner-area {
-        position: relative;
-    }
-    .banner-area__container {
-        position: absolute;
-        bottom: 0;
-    }
-    .banner-area__content {
-        max-width: 483px;
-        margin-bottom: clamp(6rem, 3.225rem + 2.71vw, 10rem);
-    }
-    .banner-area__heading {
-        font-size: 7rem;
-        margin-bottom: clamp(6rem, 3.225rem + 2.71vw, 10rem);
-    }
-    .banner-area__description {
-        font-size: 2rem;
-        line-height: 2.8rem;
-        letter-spacing: 0px;
-        margin-bottom: clamp(6rem, 3.919rem + 2.033vw, 9rem);
-    }
-    .banner-area__image img {
-        object-fit: cover;
-        width: 100%;
-    }
-    .banner-footer-area {
-        background: var(--custom-quinary-color);
-        padding: 1rem 0;
-    }
-    .banner-footer-area  .banner-footer-text {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 13.42px;
-        letter-spacing: 0px;
-        text-align: center;
-    }
-</style>
-<div class="header-area">
+<div class="header-area header-area-desktop">
     <div class="container">
         <div class="header-area__wrapper">
             <div class="header-area__logo">
@@ -65,7 +14,31 @@
         </div>
     </div>
 </div>
-<div class="banner-area">
+<div class="header-area header-area-mobile">
+    <div class="container">
+        <label class="hamburger-menu" for="hamburger">
+        <input type="checkbox" id="hamburger" style="display: none;">
+        <div class="hamburger-stripes">
+            <div class="hamburger-stripe"></div>
+            <div class="hamburger-stripe"></div>
+            <div class="hamburger-stripe"></div>
+        </div>
+        </label>
+        <div class="header-area__wrapper--mobile">
+            <div class="header-area__text">
+                <span>{{ section.settings.header_text }}</span>
+            </div>
+            <div class="header-area__cta">
+                <a href="{% if section.settings.header_cta_url != blank%}{{ section.settings.header_cta_url }}{% else %}#{% endif %}" class="cta cta-secondary">{% if section.settings.header_cta_text != blank%}{{ section.settings.header_cta_text }}{% else %}Choose Gift{% endif %} {% render 'arrow-right' %} </a>
+            </div>
+        </div>
+        <div class="header-area__logo">
+                <img src="{% if section.settings.site_logo != blank%}{{section.settings.site_logo |  image_url }} {% else %} https://cdn.shopify.com/s/files/1/0639/5068/4211/files/site-logo.png?v=1740119628 {% endif %} " alt="Site Logo" loading="eager">
+        </div>
+    </div>
+    
+</div>
+<div class="banner-area banner-area-desktop">
     <div class="container banner-area__container">
         <div class="banner-area__content mb-5">
             <div class="banner-area__content__text">
@@ -80,9 +53,23 @@
             <img src="{% if section.settings.banner_image != blank%}{{section.settings.banner_image | image_url}}{% else %}https://cdn.shopify.com/s/files/1/0639/5068/4211/files/banner-bg.png?v=1740122890{% endif %}" alt="banner background image" loading="eager">
         </div>
 </div>
+<div class="banner-area banner-area-mobile">
+    <div class="container">
+            <div class="banner-area__content__text">
+                <h1 class="banner-area__heading">{{ section.settings.banner_heading }}</h1>
+                <p class="banner-area__description">{{ section.settings.banner_description_mobile }}</p>
+            </div>
+    </div>
+    <div class="banner-area__image">
+        <img src="{% if section.settings.banner_image_mobile != blank%}{{section.settings.banner_image_mobile | image_url}}{% else %}https://cdn.shopify.com/s/files/1/0639/5068/4211/files/banner-bg-mobile.png?v=1740383597{% endif %}" alt="banner background image mobile" loading="eager">
+        <a href="{% if section.settings.banner_cta_url != blank%}{{ section.settings.banner_cta_url }}{% else %}#{% endif %}" class="cta cta-primary">{{ section.settings.banner_cta_text }}{% render 'arrow-right' %}</a>
+    </div>
+</div>
 <div class="banner-footer-area">
     <div class="container">
-        <p class="banner-footer-text text-center">{{section.settings.banner_footer_text}}</p>
+        <p class="banner-footer-text text-center desktop-hide">{{section.settings.banner_footer_text}}</p>
+        <p class="banner-footer-text text-center mobile-hide">{{section.settings.banner_footer_text_mobile}}</p>
+
     </div>
 </div>
 
@@ -127,6 +114,11 @@
             "label": "Banner Image"
         },
         {
+            "type": "image_picker",
+            "id": "banner_image_mobile",
+            "label": "Banner Image Mobile"
+        },
+        {
             "type": "text",
             "id": "banner_heading",
             "label": "Banner Heading",
@@ -137,6 +129,12 @@
             "id": "banner_description",
             "label": "Banner Description",
             "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+        },
+        {
+            "type": "text",
+            "id": "banner_description_mobile",
+            "label": "Banner Description Mobile",
+            "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
         },
         {
             "type": "text",
@@ -158,6 +156,12 @@
             "id": "banner_footer_text",
             "label": "Banner Footer Text",
             "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+        },
+        {
+            "type": "text",
+            "id": "banner_footer_text_mobile",
+            "label": "Banner Footer Text Mobile",
+            "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
         }
 
     ],

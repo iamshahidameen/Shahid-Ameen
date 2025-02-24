@@ -1,156 +1,5 @@
-<style>
-    .grid-main-wrapper {
-        padding: 10rem 0 5rem 0;
-        max-width: 2900px;
-        margin: 0 auto;
-    }
 
-    .secondary-heading {
-        font-size: 3.6rem;
-        line-height: 4.3rem;
-    }
-    .grid-products {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-column-gap: 2rem;
-        grid-row-gap: 2rem;
-    }
-
-    .product-image__wrapper {
-        /* max-width: 43.3rem;
-        max-height: 44.4rem;
-        overflow: hidden; */
-    }
-    .product-image__wrapper img {
-        max-width: 100%;
-        height: auto;
-
-    }
-    .grid-product {
-        position: relative;
-    }
-    .grid-product__icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-    }
-    .grid-product[data-product-handle="black-leather-bag"] .grid-product__icon{
-        top: 54%;
-        left: 55%;
-    }
-    .grid-product[data-product-handle="blue-silk-tuxedo"] .grid-product__icon{
-        top: 49%;
-        left: 71%;
-    }
-    .grid-product[data-product-handle="chequered-red-shirt"] .grid-product__icon{
-        top: 19%;
-        left: 57%;
-    }
-    .grid-product[data-product-handle="classic-leather-jacket"] .grid-product__icon{
-        top: 16%;
-        left: 62%;
-    }
-    .grid-product[data-product-handle="classic-varsity-top"] .grid-product__icon{
-        top: 23%;
-        left: 49%;
-    }
-    .grid-product[data-product-handle="dark-denim-top"] .grid-product__icon{
-        top: 37%;
-        left: 65%;
-    }
-    .grid-product-popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.7);
-        z-index: 1;
-    }
-    .grid-product-popup__inner-wrapper {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        max-width: 31.1rem;
-        background-color: #fff;
-        padding: 1.8rem 1.0rem 2.5rem 1.2rem;
-    }
-    .grid-product-popup__header {
-        display: grid;
-        grid-template-columns: 120px auto;
-        justify-content: space-between;
-        gap: 0.8rem;
-    }
-    .grid-product-popup__image {
-        width: 12rem;
-        height: 14rem;
-    }
-    .grid-product-popup__image img {
-        max-width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: cover;
-    }
-    .grid-product-popup__details {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .grid-product-popup__close {
-        display: flex;
-        justify-content: flex-end;
-    }
-    svg.grid-product-popup__close--svg path {
-        pointer-events: none;
-    }
-    svg.grid-product-popup__close--svg {
-        position: relative;
-        z-index: 11;
-    }
-    .grid-product-popup__close--svg, 
-    .grid-product__icon {
-        cursor: pointer;
-    }
-    .grid-product-popup__details--title {
-        font-weight: var(--custom-secondary-font-weight);
-        font-size: 1.6rem;
-        line-height: 1.92rem;
-    }
-    .grid-product-popup__details--price {
-        font-family: var(--custom-secondary-font);
-        font-weight: var(--custom-primary-font-weight);
-        font-size: 1.6rem;
-        line-height: 1.92rem;
-        padding: 2.0rem 0 1.2rem 0;
-    }
-    .grid-product-popup__details--description {
-        font-weight: var(--custom-secondary-font-weight);
-        font-size: 1.4rem;
-        line-height: 1.54rem;
-        letter-spacing: -1%;
-    }
-    p.grid-product-popup__details--description + p {
-        font-weight: var(--custom-secondary-font-weight);
-        font-size: 1.4rem;
-        line-height: 1.54rem;
-        letter-spacing: -1%;
-    }
-    .grid-product-popup__option--wrapper {
-        display: flex;
-        flex-direction: column-reverse;
-    }
-.grid-product-popup__options {
-    display: flex;
-    justify-content: flex-start;
-}
-    .popup-open {
-        overflow: hidden;
-    }
-
-</style>
-<div class="grid-main-wrapper">
+<div class="grid-main-wrapper shopify-section" id="{{section.id}}" >
     <div class="container">
         <h2 class="secondary-heading mb-3">{{ section.settings.grid_title }}</h2>
         <div class="grid-products">
@@ -191,7 +40,7 @@
                                             </div>
                                            <div class="grid-product-popup__options">
                                             {% for product_option_val in product_option.values  %}
-                                                <button class="cta-variant"><span class="cta-variant-color-hint" style="background-color: {{product_option_val}};"></span>{{ product_option_val  }}</button>
+                                                <button class="cta-variant" data-variant-color="{{ product_option_val  }}" onclick="selectColor(this)"><span class="cta-variant-color-hint" style="background-color: {{product_option_val}};"></span>{{ product_option_val  }}</button>
                                             {% endfor %}
                                            </div>
                                         </div>
@@ -203,10 +52,10 @@
                                                 {{ product_option.name  }}
                                             </div>
                                            <div class="grid-product-popup__options">
-                                            <select name="" id="{{product_option.name}}">
+                                            <select name="" id="{{product_option.name}}" class="select-option-dropdown minimal" onchange="pickSize(this)">
                                                 <option value="null">Choose Your Size</option>
                                                 {% for product_option_val in product_option.values  %}
-                                                    <option value="{{product_option_val}}">{{product_option_val}}</option>
+                                                    <option value="{{product_option_val}}" data-variant-size="{{ product_option_val  }}">{{product_option_val}}</option>
                                                 {% endfor %}
                                                 </select></select>
                                  
@@ -217,76 +66,38 @@
                                     {% endfor %}
                                 {% endif %}
                             </div>
-                            <div class="grid-product-cta">
-                                <a href="{{prod.url}}" class="cta cta-primary">Add To Cart {% render 'arrow-right' %}</a>
-                            </div>
+                            
                         </div>
+                        <div class="grid-product-cta">
+                                <a href="javascript:void(0)" class="cta cta-primary" onclick="addToCart(this)">Add To Cart {% render 'arrow-right' %}</a>
+                            </div>
                     </div>
+                    <script type="application/json">
+                                {{prod.variants | json}}
+                    </script>
 
                 </div>
             {% endfor %}
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function(){
-        // const openPopup = (productSelector) => {
-        //     console.log(productSelector, 'productSelector')
-        //     // const gridProductPopups = document.querySelectorAll('.grid-product-popup');
-        //     // gridProductPopups.forEach(popup => {
-        //     //     popup.style.display = 'none';
-        //     // });
-        //     // const gridProduct = event.target.closest('.grid-product');
-        //     // const productHandle = gridProduct.getAttribute('data-product-handle');
-        //     // const gridProductPopup = document.querySelector(`.grid-product-popup[data-product-handle="${productHandle}"]`);
-        //     // gridProductPopup.style.display = 'block';
-        // };
-        const gridProducts = document.querySelectorAll('.grid-product');
-        const gridProductPopups = document.querySelectorAll('.grid-product__icon');
-        gridProductPopups.forEach((productIcon) => {
-            productIcon.addEventListener('click', (e) => {
-                console.log(e.currentTarget, 'e.currentTarget')
-                const currentProductPopup = e.currentTarget.parentNode.nextElementSibling;
-                console.log(currentProductPopup, 'currentProductPopup')
-                currentProductPopup.style.display = 'block';
-                const bodySelector = document.querySelector('body');
-                bodySelector.classList.add('popup-open');
-                // bodySelector.className += ' bg-tint';
+<div id="cart-model" class="modal">
 
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Following Products have been added to cart</h2>
+    </div>
+    <div class="modal-body">
+      
+    </div>
+   
+  </div>
 
+</div>
+{{ 'ecom-script.js' | asset_url | script_tag }}
 
-                // gridProductPopups[index].style.display = 'block';
-            });
-        });
-        // gridProductPopups.forEach(popup => {
-        //     popup.addEventListener('click', () => {
-        //         popup.style.display = 'none';
-        //     });
-        // });
-        const closeSelectors = document.querySelectorAll('.grid-product-popup, .grid-product-popup__close--svg');
-        closeSelectors.forEach(closeSelector => {
-            closeSelector.addEventListener('click', (e) => {
-                if(e.target.classList.contains('grid-product-popup')){
-                    closeSelector.style.display = 'none';
-                    const bodySelector = document.querySelector('body');
-                    bodySelector.classList.remove('popup-open');
-                    console.log('closeSelector', closeSelector)
-                } 
-                 if (e.target.classList.contains('grid-product-popup__close--svg')){
-                    console.log('e.target else', e.currentTarget)
-                    e.target.parentNode.parentNode.parentNode.style.display = 'none';
-                    const bodySelector = document.querySelector('body');
-                    bodySelector.classList.remove('popup-open');
-                    console.log('closeSelector', closeSelector)
-                } 
-
-                console.log('e.currentTarget', e.currentTarget)
-            });
-        });
-
-        
-    });
-</script>
 {% schema %}
 {
     "name": "Ecom Grid",
